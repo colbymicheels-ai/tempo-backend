@@ -1,0 +1,18 @@
+# Render Blueprint — lets Render auto-configure the service from this repo.
+# In Render: New → Blueprint → pick your repo. It reads this file.
+services:
+  - type: web
+    name: tempo-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false          # you paste this secret in the Render dashboard
+      - key: PUBLIC_URL
+        sync: false          # set to your Render URL after first deploy
+      - key: ALLOWED_ORIGIN
+        value: "*"
+      - key: MODEL
+        value: claude-haiku-4-5
