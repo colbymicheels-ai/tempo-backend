@@ -4,7 +4,6 @@
    Two jobs, both kept OFF your phone/app where secrets aren't safe:
      • POST /api/coach            -> proxies chat to Claude with YOUR key
      • Garmin connect + sync      -> you sign in once here; we store a TOKEN only
-
    You do NOT need to edit this file. Just deploy it and set the environment
    variables (see README.md / .env.example). Plain Node — no build step.
    ============================================================================ */
@@ -35,7 +34,6 @@ app.post("/api/coach", async (req, res) => {
     let system = "You are Tempo, an expert AI running coach.";
     const msgs = incoming.slice();
     if (msgs.length && msgs[0].role === "user") system = msgs.shift().content;
-
     const r = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -63,8 +61,7 @@ app.post("/api/coach", async (req, res) => {
    2) Garmin: token-based. You sign in ONCE on /connect (this server, HTTPS).
    We exchange it for a token, store the TOKEN only, and never keep the
    password. The app just calls auth/start, status, disconnect, sync.
-
-   Note: method names in the `garmin-connect` package can vary slightly by
+   Note: method names in the garmin-connect package can vary slightly by
    version. If a call fails, check that package's README and adjust.
    ------------------------------------------------------------------------- */
 function hasToken() { try { return fs.existsSync(TOKEN_FILE); } catch { return false; } }
