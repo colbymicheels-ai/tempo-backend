@@ -181,7 +181,7 @@ app.get("/api/garmin/sync", async (_req, res) => {
     if (!hasToken()) return res.status(401).json({ error: "not connected" });
     const g = await clientFromToken();
     const today = new Date().toISOString().slice(0, 10);
-    const activities = await safe(() => g.getActivities(0, 10));
+    const activities = await safe(() => g.getActivities(10, 30));
     const bundle = {
       userProfile: await safe(() => g.getUserProfile()),
       activities: activities || [],
