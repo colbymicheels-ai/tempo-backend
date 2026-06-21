@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json({ limit: "1mb" }));
 app.use(cors({ origin: process.env.ALLOWED_ORIGIN || "*" }));
 
-const MODEL = process.env.MODEL || "claude-haiku-4-5";       // change if your account uses another id
+const MODEL = process.env.MODEL || "claude-sonnet-4-5";       // change if your account uses another id
 const PUBLIC_URL = (process.env.PUBLIC_URL || "").replace(/\/+$/, "");
 const TOKEN_FILE = process.env.TOKEN_FILE || "./garmin-token.json";
 
@@ -45,7 +45,7 @@ app.post("/api/coach", async (req, res) => {
       },
       body: JSON.stringify({
         model: MODEL,
-        max_tokens: 1024,
+        max_tokens: 4096,
         system,
         messages: msgs.length ? msgs : [{ role: "user", content: "Hello" }],
       }),
